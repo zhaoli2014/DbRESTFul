@@ -1,0 +1,36 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "DbRESTFul CRI Definition",
+  "description": "Define a configured redis invocation（CRI） code.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The Name of the CRI",
+      "type": "string"
+    },
+    "key": {
+      "type": "string",
+      "description": "The redis key to operate. it is optional, if the key specified in the query string of HttpContext.Request."
+    },
+    "dbIndex": {
+      "type": "integer",
+      "description": "The database index to operate",
+      "default": 0
+    },
+    "resultType": {
+      "type": "string",
+      "enum": [ "String", "Object" ],
+      "description": "Decides the type of result to return.",
+      "default": "String"
+    },
+    "method": {
+      "type": "string",
+      "description": "Indicates which operation method will be invoked, please refer to the spec for more details."
+    },
+    "param": {
+      "type": "object",
+      "description": "The data to operate into Redis."
+    }
+  },
+  "required": [ "name", "key", "method" ]
+}

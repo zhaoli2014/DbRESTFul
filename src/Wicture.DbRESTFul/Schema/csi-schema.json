@@ -1,0 +1,129 @@
+﻿{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "DbRESTFul CSI Definition",
+    "description": "Define a configured sql invocation（CSI） code.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The Name of the CSI",
+            "type": "string"
+        },
+        "code": {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "default": "A single sql command for invocation."
+                },
+                {
+                    "type": "object",
+                    "description": "A collection of sql commands stored with key-value format, and the executed result matches the key-value form."
+                }
+            ],
+            "description": "The sql parameters is specifed with `@` prefix, e.g. `@id` or `@name`"
+        },
+        "resultSet": {
+            "type": "string",
+            "enum": [ "S", "M" ],
+            "description": "Specify result is a Single record or Multiple record for code invocation, so, for object type of code, the resultSet should join all expected resultSet with comma `,`",
+            "default": "M"
+        },
+        "queryOnly": {
+            "type": "boolean",
+            "description": "Decides whether a read or write data connection should be used.",
+            "default": false
+        },
+        "requiredTransaction": {
+            "type": "boolean",
+            "description": "Indicates if a transaction should be used when executing the sql commands.",
+            "default": false
+        },
+        "middleWares": {
+            "type": "object",
+            "properties": {
+                "pagination": {
+                    "type": "object",
+                    "description": "Pagination middleware for query, the code have to include related pagination parameter, i.e. @size, @page or @pageSize, @pageIndex if specified property mapping.",
+                    "properties": {
+                        "size": {
+                            "type": "string",
+                            "description": "The page size parameter alias (property mapping) for pagination, i.e. you can use something like `pageSize` as the `size` parameter. it is optional."
+                        },
+                        "count": {
+                            "type": "string",
+                            "description": "The total record count parameter alias (property mapping) for pagination, i.e. you can use something like `totalCount` as the `count` parameter. it is optional."
+                        },
+                        "page": {
+                            "type": "string",
+                            "description": "The page index parameter alias (property mapping) for pagination, i.e. you can use something like `pageIndex` as the `page` parameter. it is optional."
+                        }
+                    }
+                },
+                "defaults": {
+                    "type": "object",
+                    "description": "A key-value object that will set the parameter value (that is default value) before the code executing."
+                },
+                "replace": {
+                    "type": "array",
+                    "description": "Replace the parameter with exactly value of it before sql executing, in case Dapper will not accept all @parameter case, such as table name or column name."
+                },
+                "validators": {
+                    "type": "object",
+                    "description": "Validates the parameters before executing the sql code. key-value format, i.e. the key is parameter, the value is validators"
+                },
+                "identity": {
+                    "type": "object",
+                    "description": "Use identity info for code Parameter, includes `userId`, `userName` and `role`.",
+                    "properties": {
+                        "userId": {
+                            "type": "string",
+                            "description": "The value of this property will use identity.userId of current request context as parameters."
+                        },
+                        "userName": {
+                            "type": "string",
+                            "description": "The value of this property will use identity.userName of current request context as parameters."
+                        },
+                        "role": {
+                            "type": "string",
+                            "description": "The value of this property will use identity.role of current request context as parameters."
+                        }
+                    }
+                },
+                "preprocess": {
+                    "type": "array",
+                    "description": "Pre-process the parameters into back the parameters list before code executing.",
+                    "items": {
+                        "type": "string",
+                        "description": "The method to process, format is `PreprocessClass.ProcessMethod`. the `PreprocessClass` should implement IParameterPreprocessor, and `ProcessMethod` should have `PreprocessMethodAttribute`"
+                    }
+                },
+                "buildtree": {
+                    "type": "object",
+                    "description": "Build a tree-structure data for the case that data are designed to be.",
+                    "properties": {
+                        "idKey": {
+                            "type": "string",
+                            "description": "The id key of the raw data.",
+                            "default": "id"
+                        },
+                        "parentIdKey": {
+                            "type": "string",
+                            "description": "The parentId key of the raw data.",
+                            "default": "parentId"
+                        },
+                        "childrenKey": {
+                            "type": "string",
+                            "description": "The children key of the returned data.",
+                            "default": "children"
+                        },
+                        "childrenCountKey": {
+                            "type": "string",
+                            "description": "The childrenCount key of the returned data.",
+                            "default": "childrenCount"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "required": [ "name", "code", "queryOnly" ]
+}

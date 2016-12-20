@@ -1,0 +1,123 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "DbRESTFul API Definition",
+  "description": "Define a webapi controller.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "description": "The version of the API",
+      "type": "string"
+    },
+    "owner": {
+      "description": "The owner of the API",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the API",
+      "type": "string"
+    },
+    "module": {
+      "description": "The module of the API",
+      "type": "string"
+    },
+    "url": {
+      "description": "The url of the API",
+      "type": "string"
+    },
+    "useAbsoluteUrl": {
+      "description": "Use absolute url or not",
+      "type": "boolean"
+    },
+    "method": {
+      "description": "Standard HTTP submission type, POST GET etc..",
+      "type": "string",
+      "enum": [ "POST", "GET", "DELETE", "PUT" ]
+    },
+    "title": {
+      "description": "The title of the API",
+      "type": "string"
+    },
+    "summary": {
+      "description": "The summary of the API",
+      "type": "string"
+    },
+    "note": {
+      "description": "The note of the API",
+      "type": "string"
+    },
+    "allowAnonymous": {
+      "description": "Allow anonymous or not",
+      "type": "boolean"
+    },
+    "cache": {
+      "description": "cache configation",
+      "type": "object",
+      "code": {
+        "enabled": { "type": "boolean" },
+        "type": { "type": "string" }
+      }
+    },
+    "implemented": {
+      "description": "API implemented or not",
+      "type": "boolean"
+    },
+    "implementation": {
+      "description": "API implementation type",
+      "type": "object",
+      "required": [ "csi", "repository" ]
+    },
+    "parameter": {
+      "description": "API request parameter",
+      "type": "object",
+      "required": [ "query", "body" ],
+      "query": {
+        "type": "array",
+        "description": "The url query parameter of http request."
+      },
+      "body": {
+        "type": "array",
+        "description": "The body parameter of http request."
+      }
+    },
+    "result": {
+      "description": "API retuen result parameter",
+      "type": "object",
+      "schema": {
+        "description": "The API return result parameters collection",
+        "name": {
+          "type": "string",
+          "description": "The name of API result parameters"
+        },
+        "type": {
+          "type": "array",
+          "description": "The type of API result parameters",
+          "enum": [ "string", "object", "array", "int", "bool", "number", "bit", "datetime", "decimal" ]
+        },
+        "nullable": {
+          "type": "boolean",
+          "description": "The parameters could be null or not"
+        }
+      },
+      "query": {
+        "type": "array",
+        "description": "The url query parameter of http request."
+      },
+      "body": {
+        "type": "array",
+        "description": "The body parameter of http request."
+      }
+    },
+    "mock": {
+      "description": "API mock result parameter",
+      "type": "array",
+      "input": {
+        "description": "The parameter of http request for mock when the API is not implemented",
+        "type": "object"
+      },
+      "output": {
+        "description": "The mock parameter of API return when the API is not implemented",
+        "type": "object"
+      }
+    }
+  }
+}

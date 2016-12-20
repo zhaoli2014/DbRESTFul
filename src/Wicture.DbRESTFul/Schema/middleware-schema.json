@@ -1,0 +1,102 @@
+﻿{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "DbRESTFul Middleware Definition",
+    "description": "Define Middleware code in CSI.",
+    "type": "object",
+    "properties": {
+      "middleWares": {
+        "description": "The entrance of the Middleware in CSI",
+        "type": "object",
+        "properties": {
+          "buildtree": {
+            "description": "Build a tree-structure data for the case that data are designed to be.",
+            "type": "object",
+            "properties": {
+              "childrenKey": {
+                "description": "The children key of the returned data.",
+                "type": "string",
+                "default": "children"
+              },
+              "idKey": {
+                "description": "The id key of the raw data.",
+                "type": "string",
+                "default": "id"
+              },
+              "parentIdKey": {
+                "description": "The parentId key of the raw data.",
+                "type": "string",
+                "default": "parent"
+              },
+              "childrenCountKey": {
+                "description": "The childrenCount key of the returned data.",
+                "type": "string",
+                "default": "childrenCount"
+              }
+            }
+          },
+          "defaults": {
+            "description": "A key-value object that will set the parameter value (that is default value) before the code executing.",
+            "type": "object"
+          },
+          "identity": {
+            "description": "Use identity info for code Parameter, includes `userId`, `userName` and `role`.",
+            "type": "object",
+            "properties": {
+              "userId": {
+                "description": "The value of this property will use identity.userId of current request context as parameters.",
+                "type": "string",
+                "default": "userId"
+              },
+              "userName": {
+                "description": "The value of this property will use identity.userName of current request context as parameters.",
+                "type": "string",
+                "default": "userName"
+              },
+              "role": {
+                "description": "The value of this property will use identity.role of current request context as parameters.",
+                "type": "array",
+                "default": "role"
+              }
+            }
+          },
+          "pagination": {
+            "description": "Pagination middleware for query, the code have to include related pagination parameter, i.e. @size, @page or @pageSize, @pageIndex if specified property mapping.",
+            "type": "object",
+            "properties": {
+              "count": {
+                "description": "The total record count parameter alias (property mapping) for pagination, i.e. you can use something like `totalCount` as the `count` parameter. it is optional.",
+                "type": "string",
+                "default": "count"
+              },
+              "size": {
+                "description": "The page size parameter alias (property mapping) for pagination, i.e. you can use something like `pageSize` as the `size` parameter. it is optional.",
+                "type": "string",
+                "default": "size"
+              },
+              "page": {
+                "description": "The page index parameter alias (property mapping) for pagination, i.e. you can use something like `pageIndex` as the `page` parameter. it is optional.",
+                "type": "string",
+                "default": "page"
+              }
+            }
+          },
+          "preprocess": {
+            "description": "Pre-process the parameters into back the parameters list before code executing.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The method to process, format is `PreprocessClass.ProcessMethod`. the `PreprocessClass` should implement IParameterPreprocessor, and `ProcessMethod` should have `PreprocessMethodAttribute`"
+            }
+          },
+          "replace": {
+            "description": "Replace the parameter with exactly value of it before sql executing, in case Dapper will not accept all @parameter case, such as table name or column name.",
+            "type": "array"
+          },
+          "validators": {
+            "type": "object",
+            "description": "Validates the parameters before executing the sql code. key-value format, i.e. the key is parameter, the value is validators"
+          }
+        }
+      }
+    }
+}

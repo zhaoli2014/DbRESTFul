@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.1.0",
+      "type": "platform"
+    },
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
+    "Microsoft.AspNetCore.Mvc": "1.0.1",
+    "Dapper": "1.50.2",
+    "NETStandard.Library": "1.6.1",
+    "Newtonsoft.Json": "9.0.1",
+    "SapientGuardian.MySql.Data": "6.9.813",
+    "Microsoft.Extensions.Logging": "1.0.0",
+    "System.Security.Cryptography.Algorithms": "4.3.0",
+    "Microsoft.AspNetCore.Authentication.JwtBearer": "1.0.0",
+    "StackExchange.Redis": "1.1.604-alpha",
+    "Microsoft.AspNet.WebApi.Client": "5.2.2",
+    "System.Runtime.Serialization.Xml": "4.1.1",
+    "Microsoft.Extensions.Configuration.Binder": "1.0.0"
+  },
+
+  "frameworks": {
+    "netcoreapp1.1": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  }
+}

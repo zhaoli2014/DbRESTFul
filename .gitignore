@@ -212,3 +212,6 @@ src/Dnx/Wicture.WicTrade/wwwroot/lib
 /src/pmt-ci/b.bat
 project.lock.json
 /CI.txt
+/src/Wicture.Microservice.Test.MySQL
+/src/Wicture.Microservice.Test.SQLServer
+/src/Wicture.DbRESTFul.PMT
